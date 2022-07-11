@@ -1,21 +1,32 @@
 import React from "react";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 import "app/App.css";
-import logo from "app/logo.svg";
 import Header from "components/Header";
 import CommentModal from "components/CommentModal";
+import CommentUI from "components/CommentUI";
+import TopCommenters from "components/TopCommenters";
+import { amber } from "@material-ui/core/colors";
+
+// Demonstrating the different ways to set a custom theme's properties
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#50C878",
+    },
+    secondary: amber,
+  },
+});
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
 
       <CommentModal />
-
-      <div className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-      </div>
-    </>
+      <CommentUI />
+      <TopCommenters />
+    </ThemeProvider>
   );
 }
 
