@@ -1,14 +1,41 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { getComments } from "store/slices/comment";
-import { List, ListItem, Avatar, ListItemText } from "@material-ui/core";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  makeStyles,
+  Avatar,
+} from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  table: {
+    width: 400,
+    margin: "auto",
+  },
+  tableTitle: {
+    fontWeight: "bold",
+    border: "none",
+    fontSize: 18,
+  },
+  colTitle: {
+    fontWeight: "bold",
+  },
+}));
 
 const TopCommenters = () => {
-  const dispatch = useDispatch();
   const comments = useSelector(getComments);
+  const classes = useStyles();
+
   const [topCommenters, setTopCommenters] = useState();
 
   const countComments = () => {
+    // Using commentCount object as a hashmap in order to keep track of each users total comment count
     let commentCount = {};
     comments.forEach((comment) => {
       if (!commentCount[comment.name]) {
@@ -17,33 +44,58 @@ const TopCommenters = () => {
         commentCount[comment.name]++;
       }
     });
+
+    // Sorting the commentCount object in order to more easily slice out the top 3 users with the most comments
     commentCount = Object.entries(commentCount).sort((a, b) => {
       console.log("a", a, b);
       return b[1] - a[1];
     });
-    console.log("comment", commentCount);
+    commentCount = commentCount.slice(0, 3);
     setTopCommenters(commentCount);
   };
 
+  // By passing in comments into this useEffect's dependency array, it allows the app to refresh and recalculate the top commenters each time a new comment is made
+  // As you add new comments in the app, you can see the Top Commenters may change if a user enters the top 3 comment count
   useEffect(() => {
     countComments();
-    console.log("eff", topCommenters);
   }, [comments]);
 
-  console.log("top", topCommenters);
   return (
-    <List>
-      {topCommenters &&
-        topCommenters.map((commenter) => {
-          return (
-            <ListItem>
-              <Avatar>{commenter[0][0]}</Avatar>
-              <ListItemText primary={commenter[0]} />
-              <ListItemText primary={`Number of Comments: ${commenter[1]}`} />
-            </ListItem>
-          );
-        })}
-    </List>
+    <TableContainer component={Paper}>
+      <Table className={classes.table} aria-label="simple-table">
+        <TableHead>
+          <TableRow>
+            <TableCell
+              className={classes.tableTitle}
+              align="center"
+              colSpan={2}
+            >
+              Top Commenters
+            </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell className={classes.colTitle}>Name</TableCell>
+            <TableCell className={classes.colTitle} align="center">
+              Number of Comments
+            </TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {topCommenters &&
+            topCommenters.map((commenter) => {
+              return (
+                <TableRow>
+                  <TableCell>
+                    <Avatar>{commenter[0][0]}</Avatar>
+                    {commenter[0]}
+                  </TableCell>
+                  <TableCell align="center">{commenter[1]}</TableCell>
+                </TableRow>
+              );
+            })}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 

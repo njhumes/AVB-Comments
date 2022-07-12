@@ -28,8 +28,8 @@ const CommentUI = () => {
   const classes = useStyles();
   const comments = useSelector(getComments);
 
+  // This function is demonstrating how I would pull in the comments from the API endpoint rather than the mockComments file
   const fetchComments = async () => {
-    // This function is demonstrating how I would pull in the comments from the API endpoint rather than the mockComments file
     try {
       const comments = await fetch(
         "https://jsonplaceholder.typicode.com/comments"

@@ -5,6 +5,14 @@
 
 As a user, I would like to be able to read a list of comments, add a comment, and see a list of the top 3 commenters.
 
+### Summary
+For this project, I've split up my work into 3 components, the main CommentUI listing out all comments, the TopCommenters section listing out the top 3 users with the most comments, and the CommentModal which allows a user to the site to add their name and comment to the list. I've stored comments in a new Redux Toolkit Slice named comment, in order for each component to have access to the comments, as well as post and get new comments that are added through the modal. This helps reduce prop drilling and having to store all data and methods related to commenting in a parent component. 
+
+I wanted to use a variety of Material UI components to demonstrate my understanding of this library. In the main CommentUI, I am using Cards to group the comment with it's user as well as add some separation and a divider between comments to make it easier for the user to read. In the TopCommenters, I'm using a Table 
+
+Following other components that were already built out, I used Material UI's makeStyles function to store any custom CSS styling in order to keep it consistent with the rest of the app.
+
+Overall, this was my first time using Material UI, but I enjoyed getting to understand it and use it. As the project went on, it was much easier to udnerstand and get used to. Typically in the past I have used sepearate CSS files to store styling needs, but with Material UI's makeStyles hook, it was even easier to read and keep track of any custom styling I was adding to the app without having to jump around to different files. This was also a good practice for me using Redux Toolkit and Slicing. Once I was able to understand how the Modal View was working, it was relatively easy to recreate that Slice for my comments. 
 
 ### Tasks
 
