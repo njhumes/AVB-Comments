@@ -34,8 +34,8 @@ const TopCommenters = () => {
 
   const [topCommenters, setTopCommenters] = useState();
 
+  // Using commentCount object as a hashmap in order to keep track of each users total comment count
   const countComments = () => {
-    // Using commentCount object as a hashmap in order to keep track of each users total comment count
     let commentCount = {};
     comments.forEach((comment) => {
       if (!commentCount[comment.name]) {
@@ -44,12 +44,11 @@ const TopCommenters = () => {
         commentCount[comment.name]++;
       }
     });
-
     // Sorting the commentCount object in order to more easily slice out the top 3 users with the most comments
     commentCount = Object.entries(commentCount).sort((a, b) => {
-      console.log("a", a, b);
       return b[1] - a[1];
     });
+    // Using the slice method to access the first three users
     commentCount = commentCount.slice(0, 3);
     setTopCommenters(commentCount);
   };
@@ -84,7 +83,7 @@ const TopCommenters = () => {
           {topCommenters &&
             topCommenters.map((commenter) => {
               return (
-                <TableRow>
+                <TableRow key={commenter[0]}>
                   <TableCell>
                     <Avatar>{commenter[0][0]}</Avatar>
                     {commenter[0]}

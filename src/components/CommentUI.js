@@ -29,6 +29,8 @@ const CommentUI = () => {
   const comments = useSelector(getComments);
 
   // This function is demonstrating how I would pull in the comments from the API endpoint rather than the mockComments file
+  // I would use dispatch and my reducer setComments to set these resolved comments from the API to our global store with Redux.
+  // I wanted to demonstrate my use of Promises here, however the format for the comments on this API's result is different than the mockComments format, so I continued to use mockComments in the app
   const fetchComments = async () => {
     try {
       const comments = await fetch(
@@ -39,6 +41,8 @@ const CommentUI = () => {
       console.log("Error: ", err);
     }
   };
+
+  // This is the useEffect hook that I would call to get results from the API endpoint when the component mounts by passing in and empty array to the dependencies array.
   useEffect(() => {
     fetchComments();
   }, []);
@@ -47,7 +51,7 @@ const CommentUI = () => {
     <Container className={classes.container}>
       {comments.map((comment) => {
         return (
-          <Card>
+          <Card key={comment.id}>
             <CardHeader
               avatar={<Avatar>{comment.name[0]}</Avatar>}
               title={<h3>{comment.name}</h3>}
