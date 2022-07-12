@@ -7,10 +7,9 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-import { React, useState, useEffect } from "react";
+import { React, useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-import { mockComments } from "../store/api";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { getComments } from "store/slices/comment";
 
@@ -24,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CommentUI = () => {
-  const dispatch = useDispatch();
   const classes = useStyles();
   const comments = useSelector(getComments);
 
